@@ -1528,7 +1528,8 @@ void SkDraw::drawText(const char text[], size_t byteLength,
 
         fx += autokern.adjust(glyph);
 
-        if (glyph.fWidth) {
+        // don't show ZWNJ, ZWJ, RLM, and LRM (U+200C..U+200F)
+        if (glyph.fWidth && ((glyph.fChar < 0X200C) || (glyph.fChar > 0X200F))) {
 			proc(d1g, glyph, SkFixedFloor(fx), SkFixedFloor(fy));
         }
         fx += glyph.fAdvanceX;

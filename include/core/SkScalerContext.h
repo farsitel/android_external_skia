@@ -39,6 +39,7 @@ struct SkGlyph {
     uint32_t    fID;
     uint16_t    fWidth, fHeight;
     int16_t     fTop, fLeft;
+    SkUnichar	fChar;
 
     uint8_t     fMaskFormat;
     int8_t      fRsbDelta, fLsbDelta;  // used by auto-kerning

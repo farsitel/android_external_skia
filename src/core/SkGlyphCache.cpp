@@ -169,7 +169,7 @@ const SkGlyph& SkGlyphCache::getUnicharMetrics(SkUnichar charCode) {
     uint32_t id = SkGlyph::MakeID(charCode);
     CharGlyphRec* rec = &fCharToGlyphHash[ID2HashIndex(id)];
     
-    if (rec->fID != id) {
+   if (rec->fID != id) {
         RecordHashCollisionIf(rec->fGlyph != NULL);
         // this ID is based on the UniChar
         rec->fID = id;
@@ -182,6 +182,9 @@ const SkGlyph& SkGlyphCache::getUnicharMetrics(SkUnichar charCode) {
             fScalerContext->getMetrics(rec->fGlyph);
         }
     }
+
+    rec->fGlyph->fChar = charCode;
+    
     SkASSERT(rec->fGlyph->isFullMetrics());
     return *rec->fGlyph;
 }
@@ -191,7 +194,7 @@ const SkGlyph& SkGlyphCache::getUnicharMetrics(SkUnichar charCode,
     VALIDATE();
     uint32_t id = SkGlyph::MakeID(charCode, x, y);
     CharGlyphRec* rec = &fCharToGlyphHash[ID2HashIndex(id)];
-    
+
     if (rec->fID != id) {
         RecordHashCollisionIf(rec->fGlyph != NULL);
         // this ID is based on the UniChar
@@ -205,6 +208,8 @@ const SkGlyph& SkGlyphCache::getUnicharMetrics(SkUnichar charCode,
             fScalerContext->getMetrics(rec->fGlyph);
         }
     }
+    rec->fGlyph->fChar = charCode;
+    
     SkASSERT(rec->fGlyph->isFullMetrics());
     return *rec->fGlyph;
 }
