@@ -420,8 +420,26 @@ static const FontInitRec gSystemFonts[] = {
     { "DroidSansHebrew.ttf",        gFBNames    },
     { "DroidSansThai.ttf",          gFBNames    },
     { "DroidSansJapanese.ttf",      gFBNames    },
-    { "DroidSansFallback.ttf",      gFBNames    }
+    { "DroidSansFallback.ttf",      gFBNames    },
+    /*  These are used according to gPersianFallback{From,To} arrays, so I
+        count their index in order to refer to them in the arrays. See below.
+     */
+    { "irsans.ttf",                 gFBNames    }, /* number 9 */
+    { "irsansb.ttf",                gFBNames    }, /* number 10 */
+    { "FreeFarsi.ttf",              gFBNames    }, /* number 11 */
+    { "FreeFarsi-Bold.ttf",         gFBNames    }, /* number 12 */
+    { "FreeFarsi-Italic.ttf",       gFBNames    }, /* number 13 */
+    { "FreeFarsi-BoldItalic.ttf",   gFBNames    }, /* number 14 */
+    { "FreeFarsi-Mono.ttf",         gFBNames    }  /* number 15 */
 };
+
+/*  These arrays indicate which font should be used as the Persian fallback
+    of every essential font in gSystemFonts.
+ */
+static uint32_t gPersianFallbackFrom[] = {0, 1, 2, 3, 4, 5, 6};
+static uint32_t gPersianFallbackTo[] = {9, 10, 11, 12, 13, 14, 15};
+static uint32_t gPersianFallbackFromID[] = {0, 0, 0, 0, 0, 0, 0};
+static uint32_t gPersianFallbackToID[] = {0, 0, 0, 0, 0, 0, 0};
 
 #define DEFAULT_NAMES   gSansNames
 
@@ -473,6 +491,7 @@ static void load_system_fonts() {
                                      rec[i].fFileName) // filename
                                     );
 
+
         if (rec[i].fNames != NULL) {
             // see if this is one of our fallback fonts
             if (rec[i].fNames == gFBNames) {
@@ -493,6 +512,19 @@ static void load_system_fonts() {
             while (*names) {
                 add_name(*names, family);
                 names += 1;
+            }
+        }
+
+        for (size_t j = 0; j < SK_ARRAY_COUNT(gPersianFallbackFrom); j++) {
+            if (gPersianFallbackFrom[j] == i) {
+            	gPersianFallbackFromID[j] = tf->uniqueID();
+            	break;
+            }
+        }
+        for (size_t j = 0; j < SK_ARRAY_COUNT(gPersianFallbackTo); j++) {
+            if (gPersianFallbackTo[j] == i) {
+                gPersianFallbackToID[j] = tf->uniqueID();
+                break;
             }
         }
     }
@@ -621,6 +653,12 @@ size_t SkFontHost::GetFileName(SkFontID fontID, char path[], size_t length,
 
 uint32_t SkFontHost::NextLogicalFont(uint32_t fontID) {
     load_system_fonts();
+
+    for (int i = 0; i < SK_ARRAY_COUNT(gPersianFallbackFrom); i++) {
+    	if (gPersianFallbackFromID[i] == fontID) {
+    	    return gPersianFallbackToID[i];
+    	}
+    }
 
     /*  First see if fontID is already one of our fallbacks. If so, return
         its successor. If fontID is not in our list, then return the first one
