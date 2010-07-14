@@ -424,20 +424,20 @@ static const FontInitRec gSystemFonts[] = {
     /*  These are used according to gPersianFallback{From,To} arrays, so I
         count their index in order to refer to them in the arrays. See below.
      */
-    { "irsans.ttf",                 gFBNames    }, /* number 9 */
-    { "irsansb.ttf",                gFBNames    }, /* number 10 */
-    { "FreeFarsi.ttf",              gFBNames    }, /* number 11 */
-    { "FreeFarsi-Bold.ttf",         gFBNames    }, /* number 12 */
-    { "FreeFarsi-Italic.ttf",       gFBNames    }, /* number 13 */
-    { "FreeFarsi-BoldItalic.ttf",   gFBNames    }, /* number 14 */
-    { "FreeFarsi-Mono.ttf",         gFBNames    }  /* number 15 */
+    { "irsans.ttf",                 gFBNames    }, /* number 12 */
+    { "irsansb.ttf",                gFBNames    }, /* number 13 */
+    { "FreeFarsi.ttf",              gFBNames    }, /* number 14 */
+    { "FreeFarsi-Bold.ttf",         gFBNames    }, /* number 15 */
+    { "FreeFarsi-Italic.ttf",       gFBNames    }, /* number 16 */
+    { "FreeFarsi-BoldItalic.ttf",   gFBNames    }, /* number 17 */
+    { "FreeFarsi-Mono.ttf",         gFBNames    }  /* number 18 */
 };
 
 /*  These arrays indicate which font should be used as the Persian fallback
     of every essential font in gSystemFonts.
  */
 static uint32_t gPersianFallbackFrom[] = {0, 1, 2, 3, 4, 5, 6};
-static uint32_t gPersianFallbackTo[] = {9, 10, 11, 12, 13, 14, 15};
+static uint32_t gPersianFallbackTo[] = {12, 13, 14, 15, 16, 17, 18};
 static uint32_t gPersianFallbackFromID[] = {0, 0, 0, 0, 0, 0, 0};
 static uint32_t gPersianFallbackToID[] = {0, 0, 0, 0, 0, 0, 0};
 
